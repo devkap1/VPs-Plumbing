@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VP's Plumbing, Heating & Air | Mt Kisco, NY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; }
+
+    :root {
+      --ocean:  #002C5E;
+      --flow:   #0057A8;
+      --water:  #00A9CE;
+      --orange: #FF6B00;
+      --yellow: #FFC107;
+      --slate:  #4A5568;
+      --light:  #F0F6FC;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label { font-size: .78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--water); margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--ocean); line-height: 1.2; }
+    .section-title span { color: var(--orange); }
+    .section-body { font-size: 1rem; color: var(--slate); max-width: 580px; margin-top: 12px; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 6px; font-family: 'Poppins', sans-serif; font-size: .92rem; font-weight: 700; text-decoration: none; cursor: pointer; border: 2px solid transparent; transition: all .25s ease; }
+    .btn-primary { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .btn-primary:hover { background: #e55f00; border-color: #e55f00; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,107,0,.35); }
+    .btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,.6); }
+    .btn-outline:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+    .btn-outline-dark { background: transparent; color: var(--ocean); border-color: var(--ocean); }
+    .btn-outline-dark:hover { background: var(--ocean); color: #fff; }
+
+    /* ── SPANISH TOGGLE ── */
+    .lang-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3);
+      color: rgba(255,255,255,.9); border-radius: 20px;
+      padding: 4px 12px; font-size: .76rem; font-weight: 700;
+      cursor: pointer; font-family: 'Poppins', sans-serif;
+      transition: background .2s, border-color .2s;
+      letter-spacing: .5px;
+    }
+    .lang-toggle-btn:hover { background: rgba(255,255,255,.2); border-color: rgba(255,255,255,.5); }
+    .lang-toggle-btn .flag { font-size: .9rem; }
+
+    /* ── TOP BAR ── */
+    .topbar { background: var(--ocean); padding: 8px 0; font-size: .8rem; color: rgba(255,255,255,.85); }
+    .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .topbar a { color: var(--yellow); text-decoration: none; font-weight: 600; }
+    .topbar a:hover { color: #fff; }
+    .topbar-left { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+    .topbar-item { display: flex; align-items: center; gap: 6px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    /* ── NAV ── */
+    nav { background: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,44,94,.1); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; max-width: 1200px; margin: 0 auto; gap: 24px; }
+    .nav-logo img { height: 64px; width: auto; display: block; }
+    .nav-links { display: flex; list-style: none; gap: 4px; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--ocean); font-weight: 600; font-size: .88rem; padding: 8px 14px; border-radius: 6px; transition: background .2s, color .2s; }
+    .nav-links a:hover { background: var(--light); color: var(--flow); }
+
+    /* ── HERO ── */
+    .hero { position: relative; background: #001220; overflow: hidden; padding: 90px 0 100px; }
+    #shader-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(0,28,56,.92) 0%, rgba(0,28,56,.75) 48%, rgba(0,44,94,.35) 100%);
+      z-index: 1;
+    }
+    .hero::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 80px; background: #fff; clip-path: ellipse(55% 100% at 50% 100%); z-index: 3; }
+    .hero .container { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,193,7,.15); border: 1px solid rgba(255,193,7,.45); color: var(--yellow); font-size: .75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; }
+    .hero h1 { font-size: clamp(2rem, 4.2vw, 3.3rem); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 20px; }
+    .hero h1 span { color: var(--yellow); }
+    .hero-sub { color: rgba(255,255,255,.82); font-size: 1.05rem; margin-bottom: 32px; max-width: 500px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
+    .hero-trust { display: flex; gap: 28px; flex-wrap: wrap; }
+    .trust-item { display: flex; flex-direction: column; }
+    .trust-num { font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1; }
+    .trust-label { font-size: .73rem; color: rgba(255,255,255,.6); font-weight: 500; }
+
+    .hero-card { background: rgba(255,255,255,.07); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.16); border-radius: 20px; padding: 36px; }
+    .hero-card h3 { color: #fff; font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; }
+    .hero-card > p { color: rgba(255,255,255,.65); font-size: .87rem; margin-bottom: 22px; }
+    .quote-form { display: flex; flex-direction: column; gap: 12px; }
+    .quote-form input, .quote-form select { width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.1); color: #fff; font-family: 'Poppins', sans-serif; font-size: .9rem; outline: none; transition: border .2s, background .2s; }
+    .quote-form input::placeholder { color: rgba(255,255,255,.45); }
+    .quote-form select option { color: #1a1a2e; background: #fff; }
+    .quote-form input:focus, .quote-form select:focus { border-color: var(--yellow); background: rgba(255,255,255,.15); }
+    .quote-form .btn { width: 100%; justify-content: center; font-size: 1rem; padding: 15px; }
+    .form-note { color: rgba(255,255,255,.45); font-size: .73rem; text-align: center; margin-top: 4px; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar { background: var(--light); border-bottom: 1px solid #dde6ef; padding: 18px 0; }
+    .trust-bar .container { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .trust-pill { display: flex; align-items: center; gap: 10px; font-size: .87rem; font-weight: 600; color: var(--ocean); }
+    .trust-pill .icon { width: 36px; height: 36px; border-radius: 50%; background: var(--ocean); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .95rem; flex-shrink: 0; }
+
+    /* ── SERVICES ── */
+    .services { padding: 90px 0; }
+    .services-header { text-align: center; margin-bottom: 56px; }
+    .services-header .section-title { display: block; }
+    .services-header .section-body { margin: 12px auto 0; text-align: center; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .service-card { background: #fff; border: 1.5px solid #dde6ef; border-radius: 16px; overflow: hidden; transition: transform .25s, box-shadow .25s, border-color .25s; }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,44,94,.1); border-color: var(--water); }
+    .service-img { height: 180px; overflow: hidden; }
+    .service-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .service-card:hover .service-img img { transform: scale(1.05); }
+    .service-body { padding: 24px; }
+    .service-icon { font-size: 1.5rem; margin-bottom: 12px; }
+    .service-card h3 { font-size: 1rem; font-weight: 700; color: var(--ocean); margin-bottom: 8px; }
+    .service-card p { font-size: .86rem; color: var(--slate); line-height: 1.65; }
+    .service-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: .84rem; font-weight: 700; color: var(--flow); text-decoration: none; }
+    .service-link:hover { color: var(--orange); }
+
+    /* ── FEATURES-8 STAT CARDS (3 only, centered) ── */
+    .features-grid-wrap { margin-top: 48px; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .feat-card {
+      background: #fff;
+      border: 1.5px solid #dde6ef;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .feat-card:hover { border-color: var(--water); box-shadow: 0 12px 32px rgba(0,44,94,.1); }
+    .feat-card-inner { padding: 32px 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .feat-big-circle {
+      position: relative; width: 140px; height: 80px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 4px;
+    }
+    .feat-big-circle svg { position: absolute; inset: 0; width: 100%; height: 100%; color: #dde6ef; }
+    .feat-big-circle .feat-num { font-size: 2.6rem; font-weight: 900; color: var(--ocean); position: relative; z-index: 1; }
+    .feat-a h3 { font-size: 1.2rem; font-weight: 700; color: var(--ocean); margin-top: 12px; text-align: center; }
+    .feat-ring { width: 90px; height: 90px; border-radius: 50%; border: 2px solid #dde6ef; position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .feat-ring::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px solid #eef3f8; }
+    .feat-ring-icon { font-size: 2rem; }
+    .feat-b h3, .feat-c h3 { font-size: 1rem; font-weight: 700; color: var(--ocean); text-align: center; }
+    .feat-b p, .feat-c p { font-size: .82rem; color: var(--slate); text-align: center; margin-top: 6px; }
+    .feat-graph { width: 100%; padding: 0 8px; margin-bottom: 16px; }
+    .feat-graph svg { width: 100%; }
+
+    /* ── SCROLLING TESTIMONIALS COLUMNS ── */
+    .scrolling-testimonials {
+      background: #fff;
+      padding: 72px 0 80px;
+      overflow: hidden;
+    }
+    .scrolling-testimonials .inner-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .scrolling-testimonials .inner-header .pill {
+      display: inline-block;
+      border: 1px solid #dde6ef;
+      border-radius: 8px;
+      padding: 4px 16px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--slate);
+      margin-bottom: 16px;
+    }
+    .scrolling-testimonials h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--ocean);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .scrolling-testimonials > .container > .inner-header p {
+      color: var(--slate);
+      font-size: .97rem;
+      opacity: .75;
+    }
+    .columns-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      max-height: 720px;
+      overflow: hidden;
+      /* Fade top/bottom */
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+    }
+    .testi-col { display: flex; flex-direction: column; gap: 20px; flex-shrink: 0; width: 290px; }
+    .testi-col-track { display: flex; flex-direction: column; gap: 20px; }
+    /* Animations */
+    .testi-col-1 .testi-col-track { animation: scrollUp 28s linear infinite; }
+    .testi-col-2 .testi-col-track { animation: scrollUp 36s linear infinite; }
+    .testi-col-3 .testi-col-track { animation: scrollUp 32s linear infinite; }
+    @keyframes scrollUp {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    /* Pause on hover */
+    .testi-col:hover .testi-col-track { animation-play-state: paused; }
+    .testi-card {
+      background: #fff;
+      border: 1.5px solid #dde6ef;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 24px rgba(0,44,94,.06);
+      transition: box-shadow .25s, border-color .25s;
+    }
+    .testi-card:hover { box-shadow: 0 8px 32px rgba(0,44,94,.12); border-color: var(--water); }
+    .testi-stars { color: var(--yellow); font-size: .8rem; letter-spacing: 2px; margin-bottom: 12px; }
+    .testi-text { font-size: .88rem; color: var(--slate); line-height: 1.68; margin-bottom: 16px; font-style: italic; }
+    .testi-person { display: flex; align-items: center; gap: 10px; }
+    .testi-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .testi-name { font-size: .88rem; font-weight: 700; color: var(--ocean); line-height: 1.2; }
+    .testi-role { font-size: .75rem; color: var(--slate); opacity: .7; }
+    /* col 2 & 3 hidden on small screens */
+    @media (max-width: 720px) { .testi-col-2, .testi-col-3 { display: none; } }
+    @media (max-width: 1000px) { .testi-col-3 { display: none; } }
+
+    /* ── WHY US ── */
+    .why { background: var(--light); padding: 90px 0; }
+    .why .container { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .why-visual { position: relative; }
+    .why-main-img { border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; }
+    .why-main-img img { width: 100%; height: 100%; object-fit: cover; }
+    .why-badge-card { position: absolute; bottom: 28px; right: -28px; background: #fff; border-radius: 14px; padding: 18px 22px; box-shadow: 0 12px 40px rgba(0,44,94,.15); display: flex; align-items: center; gap: 14px; min-width: 200px; }
+    .badge-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--orange); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.4rem; flex-shrink: 0; }
+    .badge-text strong { display: block; font-size: 1.1rem; font-weight: 800; color: var(--ocean); }
+    .badge-text span { font-size: .77rem; color: var(--slate); }
+    .why-years { position: absolute; top: 28px; left: -28px; background: var(--ocean); color: #fff; border-radius: 14px; padding: 20px 24px; text-align: center; box-shadow: 0 12px 40px rgba(0,44,94,.3); }
+    .why-years strong { display: block; font-size: 2.2rem; font-weight: 900; color: var(--yellow); line-height: 1; }
+    .why-years span { font-size: .73rem; opacity: .8; }
+    .why-content .section-body { margin-bottom: 28px; }
+    .benefit-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+    .benefit-item { display: flex; align-items: flex-start; gap: 14px; }
+    .benefit-check { width: 26px; height: 26px; border-radius: 50%; background: var(--ocean); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .72rem; flex-shrink: 0; margin-top: 2px; }
+    .benefit-item strong { display: block; font-size: .94rem; color: var(--ocean); font-weight: 700; }
+    .benefit-item p { font-size: .84rem; color: var(--slate); margin-top: 2px; }
+    .bbb-row { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+    .bbb-badge { background: #003087; color: #fff; border-radius: 8px; padding: 6px 14px; font-size: .8rem; font-weight: 700; letter-spacing: 1px; }
+    .bbb-badge span { color: var(--yellow); }
+    .lang-badge-btn {
+      background: transparent; border: 1.5px solid var(--water);
+      color: var(--water); border-radius: 8px; padding: 6px 14px;
+      font-size: .8rem; font-weight: 700; cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: background .2s, color .2s;
+    }
+    .lang-badge-btn:hover { background: var(--water); color: #fff; }
+
+    /* ── PROCESS ── */
+    .process { padding: 90px 0; }
+    .process-header { text-align: center; margin-bottom: 56px; }
+    .process-header .section-body { margin: 12px auto 0; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .steps::before { content: ''; position: absolute; top: 36px; left: calc(12.5% + 18px); right: calc(12.5% + 18px); height: 2px; background: linear-gradient(90deg, var(--water), var(--orange)); z-index: 0; }
+    .step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+    .step-num { width: 72px; height: 72px; border-radius: 50%; background: #fff; border: 3px solid var(--water); color: var(--ocean); font-size: 1.4rem; font-weight: 900; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transition: background .25s, color .25s; }
+    .step:hover .step-num { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+    .step h4 { font-size: 1rem; font-weight: 700; color: var(--ocean); margin-bottom: 8px; }
+    .step p { font-size: .84rem; color: var(--slate); }
+
+    /* ── PHOTO STRIP ── */
+    .photo-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; height: 260px; }
+    .photo-strip-item { overflow: hidden; position: relative; }
+    .photo-strip-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .photo-strip-item:hover img { transform: scale(1.08); }
+    .photo-strip-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,44,94,.5), transparent); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--ocean); padding: 90px 0; }
+    .testimonials-header { text-align: center; margin-bottom: 56px; }
+    .testimonials-header .section-label { color: var(--yellow); }
+    .testimonials-header .section-title { color: #fff; }
+    .testimonials-header .section-body { color: rgba(255,255,255,.7); margin: 12px auto 0; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .review-card { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 32px; transition: background .25s, transform .25s; }
+    .review-card:hover { background: rgba(255,255,255,.11); transform: translateY(-4px); }
+    .stars { color: var(--yellow); font-size: .9rem; letter-spacing: 2px; margin-bottom: 16px; }
+    .review-text { color: rgba(255,255,255,.85); font-size: .91rem; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .reviewer { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--flow); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+    .reviewer-name { font-weight: 700; color: #fff; font-size: .9rem; }
+    .reviewer-loc { font-size: .77rem; color: rgba(255,255,255,.55); }
+    .review-platform { font-size: .74rem; color: var(--yellow); font-weight: 600; margin-top: 2px; }
+    .rating-summary { display: flex; align-items: center; justify-content: center; gap: 32px; margin-top: 52px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,.1); flex-wrap: wrap; }
+    .rating-big { text-align: center; }
+    .rating-big .num { font-size: 3rem; font-weight: 900; color: #fff; line-height: 1; }
+    .rating-big .lbl { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 4px; }
+    .rating-stars-big { font-size: 1.3rem; color: var(--yellow); letter-spacing: 3px; margin: 6px 0; }
+
+    /* ── SERVICE AREAS ── */
+    .areas { padding: 90px 0; background: var(--light); }
+    .areas .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .areas-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 28px; }
+    .area-tag { display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid #dde6ef; border-radius: 8px; padding: 10px 14px; font-size: .87rem; font-weight: 600; color: var(--ocean); transition: border-color .2s, background .2s; }
+    .area-tag:hover { border-color: var(--water); background: rgba(0,169,206,.05); }
+    .area-tag::before { content: '📍'; font-size: .72rem; }
+    .counties-header { font-size: .8rem; font-weight: 700; color: var(--water); text-transform: uppercase; letter-spacing: 2px; margin: 28px 0 12px; }
+    .counties { display: flex; flex-wrap: wrap; gap: 8px; }
+    .county-tag { background: var(--ocean); color: #fff; border-radius: 6px; padding: 5px 14px; font-size: .8rem; font-weight: 600; }
+    .map-embed { border-radius: 20px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,44,94,.15); border: 3px solid #fff; }
+    .map-embed iframe { display: block; width: 100%; height: 400px; border: 0; }
+    .map-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-size: .87rem; font-weight: 600; color: var(--flow); text-decoration: none; }
+    .map-link:hover { color: var(--orange); }
+
+    /* ── CTA BANNER ── */
+    .cta-banner { background: linear-gradient(135deg, var(--ocean) 0%, var(--flow) 100%); padding: 70px 0; position: relative; overflow: hidden; }
+    .cta-banner::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; border-radius: 50%; background: rgba(255,193,7,.08); }
+    .cta-banner::after { content: ''; position: absolute; bottom: -80px; left: -40px; width: 220px; height: 220px; border-radius: 50%; background: rgba(0,169,206,.15); }
+    .cta-banner .container { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .cta-banner h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; color: #fff; }
+    .cta-banner h2 span { color: var(--yellow); }
+    .cta-banner p { color: rgba(255,255,255,.75); margin-top: 8px; font-size: .97rem; }
+    .cta-actions { display: flex; gap: 14px; flex-wrap: wrap; flex-shrink: 0; }
+    .phone-cta { display: flex; align-items: center; gap: 10px; background: var(--yellow); color: var(--ocean); padding: 14px 24px; border-radius: 6px; font-weight: 800; font-size: 1rem; text-decoration: none; transition: background .2s, transform .2s; }
+    .phone-cta:hover { background: #f0b400; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background: #001a3a; color: rgba(255,255,255,.75); padding: 64px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand img { height: 72px; width: auto; margin-bottom: 16px; object-fit: contain; }
+    .footer-brand p { font-size: .86rem; line-height: 1.7; max-width: 280px; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 20px; }
+    .social-btn { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background .2s, transform .2s; }
+    .social-btn:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); }
+    .social-btn img { width: 26px; height: 26px; object-fit: contain; display: block; flex-shrink: 0; margin-top: 13px; }
+    .footer-col h4 { font-size: .87rem; font-weight: 700; color: #fff; margin-bottom: 18px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .86rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--yellow); }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: .86rem; margin-bottom: 12px; }
+    .footer-contact-item span:first-child { color: var(--yellow); flex-shrink: 0; margin-top: 2px; }
+    .footer-contact-item a { color: rgba(255,255,255,.6); text-decoration: none; }
+    .footer-contact-item a:hover { color: var(--yellow); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding: 20px 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: .79rem; color: rgba(255,255,255,.4); }
+    .footer-bottom a { color: rgba(255,255,255,.5); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--yellow); }
+    .lic-badge { background: rgba(255,255,255,.08); border-radius: 4px; padding: 3px 8px; font-size: .74rem; font-weight: 600; color: rgba(255,255,255,.6); }
+    .footer-badges { display: flex; gap: 6px; }
+
+    /* ── EMERGENCY FLOAT ── */
+    .emergency-float { position: fixed; bottom: 28px; right: 28px; z-index: 200; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+    .float-item { position: relative; display: flex; align-items: center; }
+    .float-btn { display: flex; align-items: center; gap: 10px; padding: 13px 20px; border-radius: 50px; font-family: 'Poppins', sans-serif; font-size: .87rem; font-weight: 700; text-decoration: none; box-shadow: 0 6px 24px rgba(0,0,0,.2); transition: transform .2s, box-shadow .2s; }
+    .float-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 32px rgba(0,0,0,.25); }
+    .float-emergency { background: #D32F2F; color: #fff; }
+    .float-call { background: var(--orange); color: #fff; }
+    .float-close {
+      position: absolute; top: -6px; right: -6px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(0,0,0,.55); color: #fff;
+      border: none; cursor: pointer; font-size: .7rem;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1; font-family: 'Poppins', sans-serif;
+      transition: background .2s; z-index: 1;
+    }
+    .float-close:hover { background: rgba(0,0,0,.85); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 960px) {
+      .hero .container { grid-template-columns: 1fr; gap: 48px; }
+      .hero-card { max-width: 480px; }
+      .why .container { grid-template-columns: 1fr; }
+      .why-visual { display: none; }
+      .steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      .steps::before { display: none; }
+      .reviews-grid { grid-template-columns: 1fr 1fr; }
+      .areas .container { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .photo-strip { grid-template-columns: repeat(2, 1fr); height: 360px; }
+    }
+    @media (max-width: 640px) {
+      .topbar .container { flex-direction: column; gap: 6px; }
+      .nav-links { display: none; }
+      .services-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .cta-banner .container { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .emergency-float { bottom: 16px; right: 16px; }
+      .photo-strip { grid-template-columns: repeat(2, 1fr); }
+      .rating-summary { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <div class="topbar-item">📞 <a href="tel:+19145065752">(914) 506-5752</a></div>
+      <div class="topbar-item">📍 <a href="https://www.google.com/maps/place/VP's+Plumbing,+Heating+%26+Air/@41.1995638,-73.7365211,719m/data=!3m2!1e3!4b1!4m6!3m5!1s0x89c2bba987014f87:0x5bb2428884c2d93b!8m2!3d41.1995599!4d-73.7316502!16s%2Fg%2F11m_skr2ld?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">239 Lexington Ave, Mt Kisco, NY</a></div>
+      <div class="topbar-item">🕐 <span data-en="Open 24/7 — Emergency Service Available" data-es="Abierto 24/7 — Servicio de Emergencia Disponible">Open 24/7 — Emergency Service Available</span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-item">⭐ 4.6 Stars &nbsp;·&nbsp; 196 <span data-en="Google Reviews" data-es="Reseñas de Google">Google Reviews</span></div>
+      <button class="lang-toggle-btn" id="lang-toggle" onclick="toggleLanguage()">
+        <span class="flag" id="lang-flag">🇪🇸</span>
+        <span id="lang-label">Español</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="brand_assets/download.png" alt="VP's Plumbing, Heating & Air" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services" data-en="Services" data-es="Servicios">Services</a></li>
+      <li><a href="#why" data-en="Why Us" data-es="Por Qué Nosotros">Why Us</a></li>
+      <li><a href="#process" data-en="How It Works" data-es="Cómo Funciona">How It Works</a></li>
+      <li><a href="#reviews" data-en="Reviews" data-es="Reseñas">Reviews</a></li>
+      <li><a href="#areas" data-en="Service Areas" data-es="Áreas de Servicio">Service Areas</a></li>
+    </ul>
+    <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" data-en="Schedule Service" data-es="Programar Servicio">Schedule Service</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas id="shader-canvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge" data-en="Serving Westchester & Putnam Since 1994" data-es="Sirviendo a Westchester y Putnam Desde 1994">Serving Westchester &amp; Putnam Since 1994</div>
+      <h1 data-en="Mt Kisco's Trusted <span>Plumbing, Heating & Air</span> Experts" data-es="Los Expertos de Confianza en <span>Plomería, Calefacción y Aire</span> de Mt Kisco">Mt Kisco's Trusted <span>Plumbing, Heating &amp; Air</span> Experts</h1>
+      <p class="hero-sub" data-en="Flat-rate pricing. No surprises. Same-day service available. VP's Plumbing has kept Westchester families comfortable for over 30 years — and we're ready for your call right now." data-es="Precios fijos. Sin sorpresas. Servicio el mismo día disponible. VP's Plumbing ha mantenido a las familias de Westchester cómodas por más de 30 años — y estamos listos para su llamada ahora mismo.">Flat-rate pricing. No surprises. Same-day service available. VP's Plumbing has kept Westchester families comfortable for over 30 years — and we're ready for your call right now.</p>
+      <div class="hero-actions">
+        <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" data-en="📅 Schedule Online" data-es="📅 Programar en Línea">📅 Schedule Online</a>
+        <a href="tel:+19145065752" class="btn btn-outline">📞 (914) 506-5752</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-num">31+</span><span class="trust-label" data-en="Years in Business" data-es="Años en Negocio">Years in Business</span></div>
+        <div class="trust-item"><span class="trust-num">4.6★</span><span class="trust-label" data-en="Google Rating" data-es="Calificación Google">Google Rating</span></div>
+        <div class="trust-item"><span class="trust-num">196</span><span class="trust-label" data-en="Verified Reviews" data-es="Reseñas Verificadas">Verified Reviews</span></div>
+        <div class="trust-item"><span class="trust-num">24/7</span><span class="trust-label" data-en="Emergency Service" data-es="Servicio de Emergencia">Emergency Service</span></div>
+      </div>
+    </div>
+    <div class="hero-card" id="quote">
+      <h3 data-en="Request a Free Estimate" data-es="Solicitar Estimado Gratis">Request a Free Estimate</h3>
+      <p data-en="We'll respond within the hour — no obligation." data-es="Responderemos en menos de una hora — sin compromiso.">We'll respond within the hour — no obligation.</p>
+      <form class="quote-form" onsubmit="return false;">
+        <input type="text" data-placeholder-en="Your Full Name" data-placeholder-es="Su Nombre Completo" placeholder="Your Full Name" required />
+        <input type="tel" data-placeholder-en="Phone Number" data-placeholder-es="Número de Teléfono" placeholder="Phone Number" required />
+        <input type="email" data-placeholder-en="Email Address" data-placeholder-es="Correo Electrónico" placeholder="Email Address" />
+        <select required>
+          <option value="" disabled selected data-en="Select Service Needed" data-es="Seleccionar Servicio">Select Service Needed</option>
+          <option data-en="Plumbing Repair" data-es="Reparación de Plomería">Plumbing Repair</option>
+          <option data-en="Drain Cleaning" data-es="Limpieza de Drenajes">Drain Cleaning</option>
+          <option data-en="Water Heater" data-es="Calentador de Agua">Water Heater</option>
+          <option data-en="Leak Detection" data-es="Detección de Fugas">Leak Detection</option>
+          <option data-en="Heating / Boiler / Furnace" data-es="Calefacción / Caldera / Horno">Heating / Boiler / Furnace</option>
+          <option data-en="Air Conditioning" data-es="Aire Acondicionado">Air Conditioning</option>
+          <option data-en="New Installation" data-es="Nueva Instalación">New Installation</option>
+          <option data-en="Emergency Service" data-es="Servicio de Emergencia">Emergency Service</option>
+          <option data-en="Other" data-es="Otro">Other</option>
+        </select>
+        <input type="text" data-placeholder-en="City / ZIP Code" data-placeholder-es="Ciudad / Código Postal" placeholder="City / ZIP Code" />
+        <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" style="justify-content:center;font-size:1rem;padding:15px;" data-en="⚡ Schedule Online" data-es="⚡ Programar en Línea">⚡ Schedule Online</a>
+        <p class="form-note" data-en="🔒 Your information is private and never shared." data-es="🔒 Su información es privada y nunca se comparte.">🔒 Your information is private and never shared.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="container">
+    <div class="trust-pill"><div class="icon">🛡</div> <span data-en="Licensed &amp; Insured" data-es="Licenciado y Asegurado">Licensed &amp; Insured</span></div>
+    <div class="trust-pill"><div class="icon">💰</div> <span data-en="Flat-Rate Pricing" data-es="Precios Fijos">Flat-Rate Pricing</span></div>
+    <div class="trust-pill"><div class="icon">⚡</div> <span data-en="Same-Day Service" data-es="Servicio el Mismo Día">Same-Day Service</span></div>
+    <div class="trust-pill"><div class="icon">✅</div> <span data-en="Satisfaction Guaranteed" data-es="Satisfacción Garantizada">Satisfaction Guaranteed</span></div>
+    <div class="trust-pill"><div class="icon">🌎</div> <span data-en="English &amp; Spanish" data-es="Inglés y Español">English &amp; Spanish</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SERVICES + FEATURES STAT CARDS + SCROLLING TESTIMONIALS
+     ═══════════════════════════════════════ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header">
+      <div class="section-label" data-en="What We Do" data-es="Lo Que Hacemos">What We Do</div>
+      <h2 class="section-title" data-en='Full-Service Plumbing, <span>Heating &amp; Air</span>' data-es='Plomería Completa, <span>Calefacción y Aire</span>'>Full-Service Plumbing, <span>Heating &amp; Air</span></h2>
+      <p class="section-body" data-en="From a dripping faucet to a full boiler replacement — our licensed technicians handle residential and commercial jobs across Westchester, Putnam, Dutchess, and Rockland counties." data-es="Desde un grifo goteando hasta un reemplazo completo de caldera — nuestros técnicos licenciados atienden trabajos residenciales y comerciales en los condados de Westchester, Putnam, Dutchess y Rockland.">From a dripping faucet to a full boiler replacement — our licensed technicians handle residential and commercial jobs across Westchester, Putnam, Dutchess, and Rockland counties.</p>
+    </div>
+
+    <!-- Service cards — 3 columns, even grid -->
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-img"><img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=600&q=80" alt="Plumbing Repairs" loading="lazy" /></div>
+        <div class="service-body">
+          <div class="service-icon">🔧</div>
+          <h3 data-en="Plumbing Repairs" data-es="Reparaciones de Plomería">Plumbing Repairs</h3>
+          <p data-en="Leaks, burst pipes, faucet replacements, and fixture installs. We diagnose fast and fix it right — the first time." data-es="Fugas, tuberías reventadas, reemplazo de grifos e instalación de accesorios. Diagnosticamos rápido y lo arreglamos bien — a la primera.">Leaks, burst pipes, faucet replacements, and fixture installs. We diagnose fast and fix it right — the first time.</p>
+          <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="service-link" data-en="Book a Visit →" data-es="Reservar una Visita →">Book a Visit →</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="Drain Cleaning" loading="lazy" /></div>
+        <div class="service-body">
+          <div class="service-icon">🚿</div>
+          <h3 data-en="Drain &amp; Sewer Cleaning" data-es="Limpieza de Drenajes y Alcantarillas">Drain &amp; Sewer Cleaning</h3>
+          <p data-en="Clogged drains and sewer backups cleared with hydro-jetting, snaking, and camera inspection technology." data-es="Drenajes obstruidos y obstrucciones de alcantarilla eliminados con hidro-jet, serpentín e inspección de cámara.">Clogged drains and sewer backups cleared with hydro-jetting, snaking, and camera inspection technology.</p>
+          <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="service-link" data-en="Book a Visit →" data-es="Reservar una Visita →">Book a Visit →</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-img"><img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80" alt="Water Heater" loading="lazy" /></div>
+        <div class="service-body">
+          <div class="service-icon">🌡</div>
+          <h3 data-en="Water Heater Services" data-es="Servicios de Calentador de Agua">Water Heater Services</h3>
+          <p data-en="Installation, repair, and replacement of tank and tankless water heaters. Energy-efficient models available." data-es="Instalación, reparación y reemplazo de calentadores de agua con y sin tanque. Modelos de ahorro energético disponibles.">Installation, repair, and replacement of tank and tankless water heaters. Energy-efficient models available.</p>
+          <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="service-link" data-en="Book a Visit →" data-es="Reservar una Visita →">Book a Visit →</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-img"><img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=80" alt="Leak Detection" loading="lazy" /></div>
+        <div class="service-body">
+          <div class="service-icon">🔍</div>
+          <h3 data-en="Leak Detection" data-es="Detección de Fugas">Leak Detection</h3>
+          <p data-en="Non-invasive electronic detection to find hidden leaks before they cause serious water damage or mold." data-es="Detección electrónica no invasiva para encontrar fugas ocultas antes de que causen daños graves o moho.">Non-invasive electronic detection to find hidden leaks before they cause serious water damage or mold.</p>
+          <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="service-link" data-en="Book a Visit →" data-es="Reservar una Visita →">Book a Visit →</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <!-- Fixed: reliable Unsplash photo of furnace/HVAC unit -->
+        <div class="service-img"><img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80" alt="Heating and Boiler" loading="lazy" /></div>
+        <div class="service-body">
+          <div class="service-icon">🔥</div>
+          <h3 data-en="Heating &amp; Boiler" data-es="Calefacción y Caldera">Heating &amp; Boiler</h3>
+          <p data-en="Boiler and furnace repair, tune-ups, and full replacements. We'll keep your home warm through any Westchester winter." data-es="Reparación, ajuste y reemplazo de calderas y hornos. Mantendremos su hogar caliente en cualquier invierno de Westchester.">Boiler and furnace repair, tune-ups, and full replacements. We'll keep your home warm through any Westchester winter.</p>
+          <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="service-link" data-en="Book a Visit →" data-es="Reservar una Visita →">Book a Visit →</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-img"><img src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=600&q=80" alt="Air Conditioning" loading="lazy" /></div>
+        <div class="service-body">
+          <div class="service-icon">❄</div>
+          <h3 data-en="Air Conditioning" data-es="Aire Acondicionado">Air Conditioning</h3>
+          <p data-en="AC installation, maintenance, and emergency repair. Stay cool no matter how hot it gets in the Hudson Valley." data-es="Instalación, mantenimiento y reparación de emergencia de aire acondicionado. Manténgase fresco sin importar el calor.">AC installation, maintenance, and emergency repair. Stay cool no matter how hot it gets in the Hudson Valley.</p>
+          <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="service-link" data-en="Book a Visit →" data-es="Reservar una Visita →">Book a Visit →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES STAT CARDS — 3 cards, centered -->
+    <div class="features-grid-wrap">
+      <div class="features-grid">
+        <!-- Card A: 31+ Years -->
+        <div class="feat-card feat-a">
+          <div class="feat-card-inner">
+            <div class="feat-big-circle">
+              <svg viewBox="0 0 254 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M112.891 97.7022C140.366 97.0802 171.004 94.6715 201.087 87.5116C210.43 85.2881 219.615 82.6412 228.284 78.2473C232.198 76.3179 235.905 73.9942 239.348 71.3124C241.85 69.2557 243.954 66.7571 245.555 63.9408C249.34 57.3235 248.281 50.5341 242.498 45.6109C239.033 42.7237 235.228 40.2703 231.169 38.3054C219.443 32.7209 207.141 28.4382 194.482 25.534C184.013 23.1927 173.358 21.7755 162.64 21.2989C161.376 21.3512 160.113 21.181 158.908 20.796C158.034 20.399 156.857 19.1682 156.962 18.4535C157.115 17.8927 157.381 17.3689 157.743 16.9139C158.104 16.4588 158.555 16.0821 159.067 15.8066C160.14 15.4683 161.274 15.3733 162.389 15.5286C179.805 15.3566 196.626 18.8373 212.998 24.462C220.978 27.2494 228.798 30.4747 236.423 34.1232C240.476 36.1159 244.202 38.7131 247.474 41.8258C254.342 48.2578 255.745 56.9397 251.841 65.4892C249.793 69.8582 246.736 73.6777 242.921 76.6327C236.224 82.0192 228.522 85.4602 220.502 88.2924C205.017 93.7847 188.964 96.9081 172.738 99.2109C153.442 101.949 133.993 103.478 114.506 103.79C91.1468 104.161 67.9334 102.97 45.1169 97.5831C36.0094 95.5616 27.2626 92.1655 19.1771 87.5116C13.839 84.5746 9.1557 80.5802 5.41318 75.7725C-0.54238 67.7259 -1.13794 59.1763 3.25594 50.2827C5.82447 45.3918 9.29572 41.0315 13.4863 37.4319C24.2989 27.5721 37.0438 20.9681 50.5431 15.7272C68.1451 8.8849 86.4883 5.1395 105.175 2.83669C129.045 0.0992 153.151 0.1347 177.013 2.9425C197.672 5.2321 218.04 9.0172 237.588 16.3889C240.089 17.3418 242.498 18.5197 244.933 19.6446C246.627 20.4387 247.725 21.6695 246.997 23.615C246.455 25.1105 244.814 25.5605 242.63 24.5811C230.322 18.9961 217.233 16.1904 204.117 13.4376C188.761 10.3438 173.2 8.3666 157.558 7.5217C129.914 5.7077 102.154 8.0679 75.2124 14.5228C60.6177 17.8788 46.5758 23.2977 33.5102 30.6161C26.6595 34.3329 20.4123 39.0673 14.9818 44.658C12.9433 46.8071 11.1336 49.1622 9.58207 51.6855C4.87056 59.5336 5.61172 67.2494 11.9246 73.7608C15.2064 77.0494 18.8775 79.925 22.8564 82.3236C31.6176 87.7101 41.3848 90.5291 51.3902 92.5804C70.6068 96.5773 90.0219 97.7419 112.891 97.7022Z" fill="currentColor"/>
+              </svg>
+              <span class="feat-num">31+</span>
+            </div>
+            <h3 data-en="Years in Business" data-es="Años en Negocio">Years in Business</h3>
+          </div>
+        </div>
+        <!-- Card B: BBB A+ -->
+        <div class="feat-card feat-b">
+          <div class="feat-card-inner">
+            <div class="feat-ring"><div class="feat-ring-icon">🏆</div></div>
+            <h3 data-en="BBB A+ Rated" data-es="Calificación BBB A+">BBB A+ Rated</h3>
+            <p data-en="Verified by the Better Business Bureau and approved by Angie's List &amp; HomeAdvisor." data-es="Verificado por el Better Business Bureau y aprobado por Angie's List y HomeAdvisor.">Verified by the Better Business Bureau and approved by Angie's List &amp; HomeAdvisor.</p>
+          </div>
+        </div>
+        <!-- Card C: 4.6★ -->
+        <div class="feat-card feat-c">
+          <div class="feat-card-inner">
+            <div class="feat-graph">
+              <svg viewBox="0 0 386 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="ratingGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0057A8" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="#0057A8" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path fill="url(#ratingGrad)" d="M3 80C3 80 30 55 60 48C90 41 110 50 140 48C170 46 185 30 214 28C243 26 260 42 290 38C320 34 340 20 383 18L383 80Z"/>
+                <path stroke="#0057A8" stroke-width="2.5" stroke-linecap="round" fill="none" d="M3 62C30 55 55 48 80 44C105 40 125 50 150 48C175 46 190 30 214 28C238 26 260 42 290 38C320 34 350 22 383 18"/>
+                <text x="14" y="14" font-family="Poppins,sans-serif" font-size="11" fill="#4A5568">196 Reviews</text>
+                <text x="310" y="14" font-family="Poppins,sans-serif" font-size="11" fill="#0057A8" font-weight="700">↑ Trending</text>
+              </svg>
+            </div>
+            <h3 data-en="4.6 ★ Google Rating" data-es="Calificación Google 4.6 ★">4.6 ★ Google Rating</h3>
+            <p data-en="Consistently rated by homeowners across Westchester and Putnam counties." data-es="Consistentemente calificado por propietarios en los condados de Westchester y Putnam.">Consistently rated by homeowners across Westchester and Putnam counties.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /container -->
+</section>
+
+<!-- ═══════════════════════════════════════
+     SCROLLING TESTIMONIALS COLUMNS
+     (framer-motion ported to CSS animation)
+     ═══════════════════════════════════════ -->
+<section class="scrolling-testimonials">
+  <div class="container">
+    <div class="inner-header">
+      <div class="pill" data-en="Customer Reviews" data-es="Reseñas de Clientes">Customer Reviews</div>
+      <h2 data-en="What Our Customers Say" data-es="Lo Que Dicen Nuestros Clientes">What Our Customers Say</h2>
+      <p data-en="See what homeowners across Westchester, Putnam &amp; Rockland say about VP's Plumbing." data-es="Vea lo que dicen los propietarios de Westchester, Putnam y Rockland sobre VP's Plumbing.">See what homeowners across Westchester, Putnam &amp; Rockland say about VP's Plumbing.</p>
+    </div>
+  </div>
+  <div class="columns-wrap">
+
+    <!-- Column 1 -->
+    <div class="testi-col testi-col-1">
+      <div class="testi-col-track">
+        <!-- Original set -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Called VP's at 11pm for a burst pipe. A tech was at my door in 45 minutes, fixed it cleanly, and the price was completely fair. These are the real deal."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mike R." />
+            <div><div class="testi-name">Mike R.</div><div class="testi-role">Mount Kisco, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Boiler died mid-January. VP's came same day, gave me an upfront flat price, and had heat back on that evening. No hidden fees, no drama."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra L." />
+            <div><div class="testi-name">Sandra L.</div><div class="testi-role">Scarsdale, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Water heater went out on a Sunday. VP's was the only company that actually answered and showed up. Installed a new one by 3pm. Outstanding."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/55.jpg" alt="Robert D." />
+            <div><div class="testi-name">Robert D.</div><div class="testi-role">Yonkers, NY</div></div>
+          </div>
+        </div>
+        <!-- Duplicate set (for seamless loop) -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Called VP's at 11pm for a burst pipe. A tech was at my door in 45 minutes, fixed it cleanly, and the price was completely fair. These are the real deal."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mike R." />
+            <div><div class="testi-name">Mike R.</div><div class="testi-role">Mount Kisco, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Boiler died mid-January. VP's came same day, gave me an upfront flat price, and had heat back on that evening. No hidden fees, no drama."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra L." />
+            <div><div class="testi-name">Sandra L.</div><div class="testi-role">Scarsdale, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Water heater went out on a Sunday. VP's was the only company that actually answered and showed up. Installed a new one by 3pm. Outstanding."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/55.jpg" alt="Robert D." />
+            <div><div class="testi-name">Robert D.</div><div class="testi-role">Yonkers, NY</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="testi-col testi-col-2">
+      <div class="testi-col-track">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"AC went out in July. VP's squeezed us in the same afternoon, diagnosed the issue fast, and had us cool by dinnertime. The tech was courteous and explained every step."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/61.jpg" alt="James T." />
+            <div><div class="testi-name">James T.</div><div class="testi-role">Peekskill, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Had a stubborn drain clog that two other companies couldn't fix. VP's used a camera and hydro-jet and had it cleared in an hour. Worth every penny."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/29.jpg" alt="Maria G." />
+            <div><div class="testi-name">Maria G.</div><div class="testi-role">White Plains, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"They found a slab leak I didn't even know I had. Non-invasive detection, no ripping up my floors unnecessarily. Saved me thousands. Extremely professional."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jennifer K." />
+            <div><div class="testi-name">Jennifer K.</div><div class="testi-role">Rye, NY</div></div>
+          </div>
+        </div>
+        <!-- Duplicate -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"AC went out in July. VP's squeezed us in the same afternoon, diagnosed the issue fast, and had us cool by dinnertime. The tech was courteous and explained every step."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/61.jpg" alt="James T." />
+            <div><div class="testi-name">James T.</div><div class="testi-role">Peekskill, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Had a stubborn drain clog that two other companies couldn't fix. VP's used a camera and hydro-jet and had it cleared in an hour. Worth every penny."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/29.jpg" alt="Maria G." />
+            <div><div class="testi-name">Maria G.</div><div class="testi-role">White Plains, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"They found a slab leak I didn't even know I had. Non-invasive detection, no ripping up my floors unnecessarily. Saved me thousands. Extremely professional."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jennifer K." />
+            <div><div class="testi-name">Jennifer K.</div><div class="testi-role">Rye, NY</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Column 3 -->
+    <div class="testi-col testi-col-3">
+      <div class="testi-col-track">
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"El equipo de VP's habla español y eso hizo todo mucho más fácil. Vinieron el mismo día y arreglaron la fuga rápidamente. Muy recomendados."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/77.jpg" alt="Carlos M." />
+            <div><div class="testi-name">Carlos M.</div><div class="testi-role">Patterson, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Used VP's for a full bathroom re-pipe. They showed up on time, kept everything clean, and finished ahead of schedule. Quoted price matched exactly. Will use again."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/82.jpg" alt="Lisa W." />
+            <div><div class="testi-name">Lisa W.</div><div class="testi-role">Ossining, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"VP's installed a new tankless water heater for us. The tech walked me through the whole system, gave maintenance tips, and left zero mess. Couldn't be happier."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/91.jpg" alt="David P." />
+            <div><div class="testi-name">David P.</div><div class="testi-role">New Rochelle, NY</div></div>
+          </div>
+        </div>
+        <!-- Duplicate -->
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"El equipo de VP's habla español y eso hizo todo mucho más fácil. Vinieron el mismo día y arreglaron la fuga rápidamente. Muy recomendados."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/77.jpg" alt="Carlos M." />
+            <div><div class="testi-name">Carlos M.</div><div class="testi-role">Patterson, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Used VP's for a full bathroom re-pipe. They showed up on time, kept everything clean, and finished ahead of schedule. Quoted price matched exactly. Will use again."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/82.jpg" alt="Lisa W." />
+            <div><div class="testi-name">Lisa W.</div><div class="testi-role">Ossining, NY</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"VP's installed a new tankless water heater for us. The tech walked me through the whole system, gave maintenance tips, and left zero mess. Couldn't be happier."</p>
+          <div class="testi-person">
+            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/91.jpg" alt="David P." />
+            <div><div class="testi-name">David P.</div><div class="testi-role">New Rochelle, NY</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="photo-strip-item"><img src="https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&w=600&q=80" alt="Plumber at work" loading="lazy" /></div>
+  <div class="photo-strip-item"><img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80" alt="Technician on job" loading="lazy" /></div>
+  <div class="photo-strip-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="Pipe repair" loading="lazy" /></div>
+  <div class="photo-strip-item"><img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=600&q=80" alt="HVAC service" loading="lazy" /></div>
+</div>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-visual">
+      <div class="why-main-img">
+        <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=800&q=80" alt="VP's Plumbing technician at work" />
+      </div>
+      <div class="why-years"><strong>31+</strong><span>Years Serving<br>Westchester &amp; Beyond</span></div>
+      <div class="why-badge-card">
+        <div class="badge-icon">⭐</div>
+        <div class="badge-text"><strong>4.6 / 5.0</strong><span>196 Google Reviews</span></div>
+      </div>
+    </div>
+    <div class="why-content">
+      <div class="section-label" data-en="Why VP's Plumbing" data-es="Por Qué VP's Plumbing">Why VP's Plumbing</div>
+      <h2 class="section-title" data-en='Real Pros. <span>Honest Prices.</span> Right the First Time.' data-es='Verdaderos Profesionales. <span>Precios Honestos.</span> A la Primera.'>Real Pros. <span>Honest Prices.</span> Right the First Time.</h2>
+      <p class="section-body" data-en="Founded in 1994 by Claudio, VP's Plumbing is a family-run business built on hard work and community trust. We're not a franchise — we're your neighbors." data-es="Fundado en 1994 por Claudio, VP's Plumbing es un negocio familiar construido sobre el trabajo duro y la confianza de la comunidad. No somos una franquicia — somos sus vecinos.">Founded in 1994 by Claudio, VP's Plumbing is a family-run business built on hard work and community trust. We're not a franchise — we're your neighbors.</p>
+      <div class="bbb-row">
+        <div class="bbb-badge">BBB <span>A+</span> Rating</div>
+        <!-- Functional Spanish toggle button -->
+        <button class="lang-badge-btn" id="lang-badge-btn" onclick="toggleLanguage()">🇪🇸 Se Habla Español</button>
+      </div>
+      <ul class="benefit-list">
+        <li class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong data-en="Flat-Rate, Upfront Pricing" data-es="Precios Fijos y Transparentes">Flat-Rate, Upfront Pricing</strong>
+            <p data-en="We quote the price before we start. No hourly surprises, no add-ons after the fact — ever." data-es="Le cotizamos antes de comenzar. Sin sorpresas por hora, sin cargos adicionales — nunca.">We quote the price before we start. No hourly surprises, no add-ons after the fact — ever.</p>
+          </div>
+        </li>
+        <li class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong data-en="Licensed, Background-Checked Technicians" data-es="Técnicos Licenciados con Verificación de Antecedentes">Licensed, Background-Checked Technicians</strong>
+            <p data-en="Every tech is fully licensed, insured, and vetted. You know who's coming into your home." data-es="Cada técnico está completamente licenciado, asegurado y verificado. Sabe quién entra a su hogar.">Every tech is fully licensed, insured, and vetted. You know who's coming into your home.</p>
+          </div>
+        </li>
+        <li class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong data-en="24/7 Emergency Response" data-es="Respuesta de Emergencia 24/7">24/7 Emergency Response</strong>
+            <p data-en="We answer calls around the clock and dispatch same-day for urgent plumbing and HVAC situations." data-es="Atendemos llamadas las 24 horas y enviamos personal el mismo día para situaciones urgentes de plomería y HVAC.">We answer calls around the clock and dispatch same-day for urgent plumbing and HVAC situations.</p>
+          </div>
+        </li>
+        <li class="benefit-item">
+          <div class="benefit-check">✓</div>
+          <div>
+            <strong data-en="Approved by Angie's List &amp; HomeAdvisor" data-es="Aprobado por Angie's List y HomeAdvisor">Approved by Angie's List &amp; HomeAdvisor</strong>
+            <p data-en="Third-party verified for quality, reliability, and customer satisfaction across all service categories." data-es="Verificado por terceros en calidad, confiabilidad y satisfacción del cliente en todas las categorías de servicio.">Third-party verified for quality, reliability, and customer satisfaction across all service categories.</p>
+          </div>
+        </li>
+      </ul>
+      <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-outline-dark" data-en="Schedule a Service Call →" data-es="Programar una Llamada de Servicio →">Schedule a Service Call →</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="process" id="process">
+  <div class="container">
+    <div class="process-header">
+      <div class="section-label" data-en="How It Works" data-es="Cómo Funciona">How It Works</div>
+      <h2 class="section-title" data-en='Simple. Fast. <span>No Surprises.</span>' data-es='Simple. Rápido. <span>Sin Sorpresas.</span>'>Simple. Fast. <span>No Surprises.</span></h2>
+      <p class="section-body" data-en="Getting your plumbing or HVAC fixed shouldn't be complicated. Here's exactly what happens when you call VP's." data-es="Reparar su plomería o HVAC no debería ser complicado. Aquí está exactamente lo que sucede cuando llama a VP's.">Getting your plumbing or HVAC fixed shouldn't be complicated. Here's exactly what happens when you call VP's.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h4 data-en="Call or Schedule Online" data-es="Llame o Programe en Línea">Call or Schedule Online</h4><p data-en="Reach us 24/7 by phone or book through our online scheduler in under 2 minutes." data-es="Comuníquese con nosotros 24/7 por teléfono o reserve en línea en menos de 2 minutos.">Reach us 24/7 by phone or book through our online scheduler in under 2 minutes.</p></div>
+      <div class="step"><div class="step-num">2</div><h4 data-en="Get a Flat-Rate Quote" data-es="Obtenga una Cotización de Precio Fijo">Get a Flat-Rate Quote</h4><p data-en="A licensed tech arrives, diagnoses the issue, and gives you an upfront price — you approve before we start." data-es="Un técnico licenciado llega, diagnostica el problema y le da un precio por adelantado — usted aprueba antes de comenzar.">A licensed tech arrives, diagnoses the issue, and gives you an upfront price — you approve before we start.</p></div>
+      <div class="step"><div class="step-num">3</div><h4 data-en="We Fix It Right" data-es="Lo Arreglamos Bien">We Fix It Right</h4><p data-en="We get to work immediately using quality parts built to last. No shortcuts, no callbacks." data-es="Nos ponemos a trabajar de inmediato con piezas de calidad hechas para durar. Sin atajos, sin rellamadas.">We get to work immediately using quality parts built to last. No shortcuts, no callbacks.</p></div>
+      <div class="step"><div class="step-num">4</div><h4 data-en="You're Covered" data-es="Está Cubierto">You're Covered</h4><p data-en="Job done, workspace cleaned up, and your satisfaction guaranteed before we leave your property." data-es="Trabajo terminado, espacio de trabajo limpio y su satisfacción garantizada antes de abandonar su propiedad.">Job done, workspace cleaned up, and your satisfaction guaranteed before we leave your property.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREAS -->
+<section class="areas" id="areas">
+  <div class="container">
+    <div>
+      <div class="section-label" data-en="Where We Serve" data-es="Dónde Servimos">Where We Serve</div>
+      <h2 class="section-title" data-en='Proudly Serving <span>New York &amp; Connecticut</span>' data-es='Sirviendo Orgullosamente <span>Nueva York y Connecticut</span>'>Proudly Serving <span>New York &amp; Connecticut</span></h2>
+      <p class="section-body" data-en="Based in Mt Kisco, VP's Plumbing serves a wide region across the Hudson Valley and beyond. Don't see your city? Call us — we likely cover it." data-es="Con sede en Mt Kisco, VP's Plumbing sirve una amplia región en el Valle del Hudson y más allá. ¿No ve su ciudad? Llámenos — probablemente la cubrimos.">Based in Mt Kisco, VP's Plumbing serves a wide region across the Hudson Valley and beyond. Don't see your city? Call us — we likely cover it.</p>
+      <div class="areas-list">
+        <div class="area-tag">Mount Kisco</div><div class="area-tag">New Rochelle</div>
+        <div class="area-tag">Peekskill</div><div class="area-tag">Scarsdale</div>
+        <div class="area-tag">White Plains</div><div class="area-tag">Yonkers</div>
+        <div class="area-tag">Patterson</div><div class="area-tag">Trumbull, CT</div>
+        <div class="area-tag">Rye</div><div class="area-tag">Ossining</div>
+      </div>
+      <div class="counties-header" data-en="Counties Covered" data-es="Condados Cubiertos">Counties Covered</div>
+      <div class="counties">
+        <span class="county-tag">Westchester</span><span class="county-tag">Putnam</span>
+        <span class="county-tag">Dutchess</span><span class="county-tag">Rockland</span>
+        <span class="county-tag">+ Connecticut</span>
+      </div>
+      <div style="margin-top:28px;">
+        <a href="tel:+19145065752" class="btn btn-primary" data-en="📞 Call to Confirm Your Area" data-es="📞 Llame para Confirmar su Área">📞 Call to Confirm Your Area</a>
+      </div>
+    </div>
+    <div>
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2985.0!2d-73.7365211!3d41.1995638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2bba987014f87%3A0x5bb2428884c2d93b!2sVP's%20Plumbing%2C%20Heating%20%26%20Air!5e0!3m2!1sen!2sus!4v1712345678" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="VP's Plumbing location"></iframe>
+      </div>
+      <a href="https://www.google.com/maps/place/VP's+Plumbing,+Heating+%26+Air/@41.1995638,-73.7365211,719m/data=!3m2!1e3!4b1!4m6!3m5!1s0x89c2bba987014f87:0x5bb2428884c2d93b!8m2!3d41.1995599!4d-73.7316502!16s%2Fg%2F11m_skr2ld?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="map-link">📍 <span data-en="Get Directions on Google Maps →" data-es="Obtener Direcciones en Google Maps →">Get Directions on Google Maps →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="container">
+    <div>
+      <h2 data-en='Need a Plumber <span>Today?</span>' data-es='¿Necesita un Plomero <span>Hoy?</span>'>Need a Plumber <span>Today?</span></h2>
+      <p data-en="We're available 24/7 — call us or schedule online and we'll be there fast." data-es="Estamos disponibles 24/7 — llámenos o programe en línea y estaremos allí rápido.">We're available 24/7 — call us or schedule online and we'll be there fast.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="tel:+19145065752" class="phone-cta">📞 (914) 506-5752</a>
+      <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" data-en="📅 Schedule Online" data-es="📅 Programar en Línea">📅 Schedule Online</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="brand_assets/Vp's Plumbing logo.png" alt="VP's Plumbing, Heating & Air" />
+        <p data-en="Family-owned and operated since 1994. Serving Westchester, Putnam, Dutchess, Rockland, and Connecticut with honest, flat-rate plumbing and HVAC service." data-es="Empresa familiar desde 1994. Sirviendo a Westchester, Putnam, Dutchess, Rockland y Connecticut con servicio honesto de plomería y HVAC a precio fijo.">Family-owned and operated since 1994. Serving Westchester, Putnam, Dutchess, Rockland, and Connecticut with honest, flat-rate plumbing and HVAC service.</p>
+        <div class="footer-socials">
+          <a href="https://www.facebook.com/VPsPlumbingMountKisco/" target="_blank" rel="noopener" class="social-btn" title="Facebook">
+            <img src="brand_assets/Facebook logo.png" alt="Facebook" />
+          </a>
+          <a href="https://www.google.com/maps/place/VP's+Plumbing,+Heating+%26+Air/@41.1995638,-73.7365211,719m/data=!3m2!1e3!4b1!4m6!3m5!1s0x89c2bba987014f87:0x5bb2428884c2d93b!8m2!3d41.1995599!4d-73.7316502!16s%2Fg%2F11m_skr2ld?entry=ttu&g_ep=EgoyMDI2MDQwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="social-btn" title="Google Maps">
+            <img src="brand_assets/Google maps logo.png" alt="Google Maps" />
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Services" data-es="Servicios">Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services" data-en="Plumbing Repairs" data-es="Reparaciones de Plomería">Plumbing Repairs</a></li>
+          <li><a href="#services" data-en="Drain &amp; Sewer Cleaning" data-es="Limpieza de Drenajes">Drain &amp; Sewer Cleaning</a></li>
+          <li><a href="#services" data-en="Water Heaters" data-es="Calentadores de Agua">Water Heaters</a></li>
+          <li><a href="#services" data-en="Leak Detection" data-es="Detección de Fugas">Leak Detection</a></li>
+          <li><a href="#services" data-en="Heating &amp; Boiler" data-es="Calefacción y Caldera">Heating &amp; Boiler</a></li>
+          <li><a href="#services" data-en="Air Conditioning" data-es="Aire Acondicionado">Air Conditioning</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Company" data-es="Empresa">Company</h4>
+        <ul class="footer-links">
+          <li><a href="#why" data-en="About Us" data-es="Sobre Nosotros">About Us</a></li>
+          <li><a href="#reviews" data-en="Reviews" data-es="Reseñas">Reviews</a></li>
+          <li><a href="#areas" data-en="Service Areas" data-es="Áreas de Servicio">Service Areas</a></li>
+          <li><a href="#process" data-en="How It Works" data-es="Cómo Funciona">How It Works</a></li>
+          <li><a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" data-en="Schedule Online" data-es="Programar en Línea">Schedule Online</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-en="Contact" data-es="Contacto">Contact</h4>
+        <div class="footer-contact-item"><span>📞</span><a href="tel:+19145065752">(914) 506-5752</a></div>
+        <div class="footer-contact-item"><span>📍</span><a href="https://www.google.com/maps/place/VP's+Plumbing,+Heating+%26+Air/@41.1995638,-73.7365211,719m" target="_blank" rel="noopener">239 Lexington Ave, Suite 3C<br>Mount Kisco, NY 10549</a></div>
+        <div class="footer-contact-item"><span>🕐</span><span data-en="Open 24/7 — Emergency Line Always Available" data-es="Abierto 24/7 — Línea de Emergencia Siempre Disponible">Open 24/7 — Emergency Line Always Available</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 VP's Plumbing, Heating &amp; Air. All rights reserved. · Est. 1994</div>
+      <div class="footer-badges"><span class="lic-badge">Licensed</span><span class="lic-badge">Bonded</span><span class="lic-badge">Insured</span><span class="lic-badge">BBB A+</span></div>
+      <div><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- EMERGENCY FLOATS -->
+<div class="emergency-float" id="emergency-float">
+  <div class="float-item" id="float-emergency-wrap">
+    <a href="tel:+19145065752" class="float-btn float-emergency" id="float-emergency-btn" data-en="🚨 Emergency: (914) 506-5752" data-es="🚨 Emergencia: (914) 506-5752">🚨 Emergency: (914) 506-5752</a>
+    <button class="float-close" onclick="dismissFloat('float-emergency-wrap')" title="Dismiss">✕</button>
+  </div>
+  <div class="float-item" id="float-schedule-wrap">
+    <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="float-btn float-call" id="float-schedule-btn" data-en="📅 Schedule Online" data-es="📅 Programar en Línea">📅 Schedule Online</a>
+    <button class="float-close" onclick="dismissFloat('float-schedule-wrap')" title="Dismiss">✕</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     WEBGL SHADER BACKGROUND
+     ══════════════════════════════════════════════ -->
+<script>
+(function () {
+  const canvas = document.getElementById('shader-canvas');
+  if (!canvas) return;
+  const gl = canvas.getContext('webgl');
+  if (!gl) return;
+
+  const vsSource = `attribute vec4 aPos; void main(){ gl_Position = aPos; }`;
+  const fsSource = `
+    precision highp float;
+    uniform vec2 iRes; uniform float iTime;
+    const float spd=0.18,gsw=0.015,aw=0.05,mlw=0.025,mnlw=0.0125;
+    const float sc=5.,linSpd=1.*spd,linAmp=1.,linFreq=0.2;
+    const float wSpd=0.2*spd,wFreq=0.5,wAmp=1.;
+    const float offFreq=0.5,offSpd=1.33*spd,minOS=0.6,maxOS=2.;
+    const float minLW=0.01,maxLW=0.18;
+    const int LP=16;
+    const vec4 LC=vec4(0.,0.66,0.807,1.);
+    #define sm(p,hw,t) smoothstep(hw,0.,abs(p-(t)))
+    #define cs(p,hw,t) smoothstep(hw+gsw,hw,abs(p-(t)))
+    #define dc(p,r,c) smoothstep(r+gsw,r,length(c-(p)))
+    float rnd(float t){return(cos(t)+cos(t*1.3+1.3)+cos(t*1.4+1.4))/3.;}
+    float py(float x,float hf,float off){return rnd(x*linFreq+iTime*linSpd)*hf*linAmp+off;}
+    void main(){
+      vec2 uv=gl_FragCoord.xy/iRes.xy;
+      vec2 sp=(gl_FragCoord.xy-iRes.xy*.5)/iRes.x*2.*sc;
+      float hf=1.-(cos(uv.x*6.283)*.5+.5);
+      float vf=1.-(cos(uv.y*6.283)*.5+.5);
+      sp.y+=rnd(sp.x*wFreq+iTime*wSpd)*wAmp*(.5+hf);
+      sp.x+=rnd(sp.y*wFreq+iTime*wSpd+2.)*wAmp*hf;
+      vec4 lines=vec4(0.);
+      for(int l=0;l<LP;l++){
+        float nli=float(l)/float(LP);
+        float ot=iTime*offSpd, op=float(l)+sp.x*offFreq;
+        float r=rnd(op+ot)*.5+.5;
+        float hw=mix(minLW,maxLW,r*hf)*.5;
+        float off=rnd(op+ot*(1.+nli))*mix(minOS,maxOS,hf);
+        float lp=py(sp.x,hf,off);
+        float line=sm(lp,hw,sp.y)/2.+cs(lp,hw*.15,sp.y);
+        float cx=mod(float(l)+iTime*linSpd,25.)-12.;
+        vec2 cp=vec2(cx,py(cx,hf,off));
+        line+=dc(cp,.01,sp)*4.;
+        lines+=(line)*LC*r;
+      }
+      vec4 bg=mix(vec4(0.,.11,.235,1.),vec4(0.,.23,.42,1.),uv.x);
+      bg*=vf; bg.a=1.; bg+=lines;
+      gl_FragColor=bg;
+    }
+  `;
+
+  function mkShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, vsSource));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, fsSource));
+  gl.linkProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+
+  const aPos = gl.getAttribLocation(prog, 'aPos');
+  const uRes = gl.getUniformLocation(prog, 'iRes');
+  const uTime = gl.getUniformLocation(prog, 'iTime');
+
+  function resize() {
+    const hero = canvas.parentElement;
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const t0 = Date.now();
+  (function render() {
+    const t = (Date.now() - t0) / 1000;
+    gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.useProgram(prog);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, t);
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(aPos);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  })();
+})();
+</script>
+
+<!-- ══════════════════════════════════════════════
+     SPANISH LANGUAGE TOGGLE + FLOAT DISMISS
+     ══════════════════════════════════════════════ -->
+<script>
+var currentLang = 'en';
+
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  var isEs = currentLang === 'es';
+
+  // ── Topbar toggle button ──
+  // When page is English: show 🇪🇸 Español (offering to switch to Spanish)
+  // When page is Spanish: show 🇺🇸 English (offering to switch back)
+  var flag  = document.getElementById('lang-flag');
+  var label = document.getElementById('lang-label');
+  if (flag)  flag.textContent  = isEs ? '🇺🇸' : '🇪🇸';
+  if (label) label.textContent = isEs ? 'English' : 'Español';
+
+  // ── Why Us inline badge button ──
+  var badge = document.getElementById('lang-badge-btn');
+  if (badge) badge.textContent = isEs ? '🇺🇸 Switch to English' : '🇪🇸 Se Habla Español';
+
+  // ── Swap all [data-en] / [data-es] elements ──
+  document.querySelectorAll('[data-en]').forEach(function(el) {
+    var en = el.getAttribute('data-en');
+    var es = el.getAttribute('data-es');
+    if (!es) return;
+    // Skip the toggle buttons themselves (handled above)
+    if (el.id === 'lang-toggle' || el.id === 'lang-badge-btn') return;
+    // Skip inputs/selects (handled separately)
+    if (el.tagName === 'INPUT' || el.tagName === 'SELECT') return;
+    el.innerHTML = isEs ? es : en;
+  });
+
+  // ── Select options ──
+  document.querySelectorAll('select option[data-en]').forEach(function(opt) {
+    var en = opt.getAttribute('data-en');
+    var es = opt.getAttribute('data-es');
+    if (es) opt.textContent = isEs ? es : en;
+  });
+
+  // ── Input placeholders ──
+  document.querySelectorAll('input[data-placeholder-en]').forEach(function(inp) {
+    var en = inp.getAttribute('data-placeholder-en');
+    var es = inp.getAttribute('data-placeholder-es');
+    if (es) inp.placeholder = isEs ? es : en;
+  });
+
+  // ── Float buttons ──
+  ['float-emergency-btn', 'float-schedule-btn'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var en = el.getAttribute('data-en');
+    var es = el.getAttribute('data-es');
+    if (en && es) el.textContent = isEs ? es : en;
+  });
+
+  document.getElementById('html-root').lang = currentLang;
+}
+
+// Dismiss a float button by hiding its wrapper
+function dismissFloat(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(120%)';
+    el.style.transition = 'opacity .25s, transform .3s';
+    setTimeout(function() { el.style.display = 'none'; }, 320);
+  }
+}
+</script>
+
+</body>
+</html>
