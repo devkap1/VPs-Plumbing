@@ -66,6 +66,28 @@
     .nav-links a { text-decoration: none; color: var(--ocean); font-weight: 600; font-size: .88rem; padding: 8px 14px; border-radius: 6px; transition: background .2s, color .2s; }
     .nav-links a:hover { background: var(--light); color: var(--flow); }
 
+    /* ── MOBILE MENU ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--ocean); border-radius: 2px; transition: all .25s; }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; background: #fff;
+      z-index: 999; flex-direction: column; padding: 24px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .mobile-menu-header img { height: 52px; }
+    .mobile-menu-close { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--ocean); line-height: 1; }
+    .mobile-menu nav { display: flex; flex-direction: column; gap: 4px; }
+    .mobile-menu nav a { font-size: 1.2rem; font-weight: 700; color: var(--ocean); text-decoration: none; padding: 14px 0; border-bottom: 1px solid #eef3f8; display: block; }
+    .mobile-menu nav a:hover { color: var(--orange); }
+    .mobile-menu .mobile-cta { margin-top: 32px; }
+    .mobile-menu .mobile-cta .btn { width: 100%; justify-content: center; font-size: 1rem; padding: 16px; }
+    .mobile-menu .mobile-phone { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; color: var(--ocean); font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+    @media (max-width: 640px) { .nav-hamburger { display: flex; } }
+
     /* ── HERO ── */
     .hero { position: relative; background: #001220; overflow: hidden; padding: 90px 0 100px; }
     #shader-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
@@ -222,7 +244,6 @@
     .testi-stars { color: var(--yellow); font-size: .8rem; letter-spacing: 2px; margin-bottom: 12px; }
     .testi-text { font-size: .88rem; color: var(--slate); line-height: 1.68; margin-bottom: 16px; font-style: italic; }
     .testi-person { display: flex; align-items: center; gap: 10px; }
-    .testi-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
     .testi-name { font-size: .88rem; font-weight: 700; color: var(--ocean); line-height: 1.2; }
     .testi-role { font-size: .75rem; color: var(--slate); opacity: .7; }
     /* col 2 & 3 hidden on small screens */
@@ -370,13 +391,19 @@
     .float-close:hover { background: rgba(0,0,0,.85); }
 
     /* ── RESPONSIVE ── */
+
+    /* Tablet landscape */
     @media (max-width: 1024px) {
       .services-grid { grid-template-columns: repeat(2, 1fr); }
       .features-grid { grid-template-columns: repeat(3, 1fr); }
     }
+
+    /* Tablet portrait */
     @media (max-width: 960px) {
-      .hero .container { grid-template-columns: 1fr; gap: 48px; }
-      .hero-card { max-width: 480px; }
+      .hero { padding: 64px 0 88px; }
+      .hero .container { grid-template-columns: 1fr; gap: 40px; }
+      .hero-card { max-width: 100%; }
+      .hero h1 { font-size: clamp(1.8rem, 5vw, 2.8rem); }
       .why .container { grid-template-columns: 1fr; }
       .why-visual { display: none; }
       .steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
@@ -384,20 +411,94 @@
       .reviews-grid { grid-template-columns: 1fr 1fr; }
       .areas .container { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
-      .photo-strip { grid-template-columns: repeat(2, 1fr); height: 360px; }
+      .photo-strip { grid-template-columns: repeat(2, 1fr); height: 300px; }
+      .spline-card { flex-direction: column; height: auto; }
     }
+
+    /* Mobile */
     @media (max-width: 640px) {
-      .topbar .container { flex-direction: column; gap: 6px; }
+      /* Top bar — hide address on mobile to avoid overflow */
+      .topbar .container { flex-direction: column; align-items: flex-start; gap: 4px; padding: 8px 16px; }
+      .topbar-left { gap: 8px; flex-direction: column; }
+      .topbar-right { width: 100%; justify-content: space-between; }
+      .topbar-item:nth-child(2) { display: none; } /* hide address */
+
+      /* Nav — hamburger placeholder, hide links */
       .nav-links { display: none; }
+      .nav-inner { padding: 0 16px; }
+      .nav-logo img { height: 52px; }
+
+      /* Hero */
+      .hero { padding: 48px 0 80px; }
+      .hero .container { gap: 32px; }
+      .hero-badge { font-size: .68rem; }
+      .hero h1 { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+      .hero-sub { font-size: .95rem; }
+      .hero-actions { flex-direction: column; gap: 10px; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+      .hero-trust { gap: 16px; }
+      .hero-card { padding: 24px; }
+
+      /* Trust bar — wrap tightly */
+      .trust-bar .container { gap: 12px; justify-content: flex-start; }
+      .trust-pill { font-size: .78rem; }
+      .trust-pill .icon { width: 30px; height: 30px; font-size: .8rem; }
+
+      /* Services */
+      .services { padding: 56px 0; }
       .services-grid { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: 1fr; }
+
+      /* Scrolling testimonials — single column */
+      .testi-col-2, .testi-col-3 { display: none; }
+      .columns-wrap { max-height: 560px; }
+
+      /* Photo strip — 2 col, shorter */
+      .photo-strip { grid-template-columns: repeat(2, 1fr); height: 200px; }
+
+      /* Why section */
+      .why { padding: 56px 0; }
+      .bbb-row { flex-wrap: wrap; gap: 10px; }
+
+      /* Process */
+      .process { padding: 56px 0; }
+      .steps { grid-template-columns: 1fr; gap: 28px; }
+      .step { padding: 0 8px; }
+
+      /* Reviews */
+      .testimonials { padding: 56px 0; }
       .reviews-grid { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; }
-      .cta-banner .container { flex-direction: column; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .emergency-float { bottom: 16px; right: 16px; }
-      .photo-strip { grid-template-columns: repeat(2, 1fr); }
-      .rating-summary { gap: 20px; }
+      .rating-summary { flex-direction: column; gap: 20px; align-items: center; }
+
+      /* Areas */
+      .areas { padding: 56px 0; }
+      .areas-list { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .map-embed iframe { height: 280px; }
+
+      /* CTA */
+      .cta-banner { padding: 48px 0; }
+      .cta-banner .container { flex-direction: column; gap: 24px; }
+      .cta-actions { flex-direction: column; width: 100%; }
+      .cta-actions .btn, .phone-cta { width: 100%; justify-content: center; text-align: center; }
+
+      /* Footer */
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+      /* Float buttons — smaller on mobile */
+      .emergency-float { bottom: 14px; right: 14px; gap: 8px; }
+      .float-btn { font-size: .78rem; padding: 11px 16px; }
+
+      /* Section padding reduction */
+      .process-header .section-body,
+      .services-header .section-body { margin-left: auto; margin-right: auto; }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 380px) {
+      .hero h1 { font-size: 1.55rem; }
+      .float-btn { font-size: .72rem; padding: 10px 12px; }
+      .areas-list { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -434,9 +535,31 @@
       <li><a href="#reviews" data-en="Reviews" data-es="Reseñas">Reviews</a></li>
       <li><a href="#areas" data-en="Service Areas" data-es="Áreas de Servicio">Service Areas</a></li>
     </ul>
-    <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" data-en="Schedule Service" data-es="Programar Servicio">Schedule Service</a>
+    <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" data-en="Schedule Service" data-es="Programar Servicio" style="white-space:nowrap;">Schedule Service</a>
+    <button class="nav-hamburger" onclick="openMobileMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-header">
+    <img src="brand_assets/download.png" alt="VP's Plumbing" />
+    <button class="mobile-menu-close" onclick="closeMobileMenu()" aria-label="Close menu">✕</button>
+  </div>
+  <nav>
+    <a href="#services" onclick="closeMobileMenu()" data-en="Services" data-es="Servicios">Services</a>
+    <a href="#why" onclick="closeMobileMenu()" data-en="Why Us" data-es="Por Qué Nosotros">Why Us</a>
+    <a href="#process" onclick="closeMobileMenu()" data-en="How It Works" data-es="Cómo Funciona">How It Works</a>
+    <a href="#reviews" onclick="closeMobileMenu()" data-en="Reviews" data-es="Reseñas">Reviews</a>
+    <a href="#areas" onclick="closeMobileMenu()" data-en="Service Areas" data-es="Áreas de Servicio">Service Areas</a>
+  </nav>
+  <div class="mobile-cta">
+    <a href="https://go.servicetitan.com/webscheduler?tenantid=811572409" target="_blank" rel="noopener" class="btn btn-primary" data-en="📅 Schedule Service" data-es="📅 Programar Servicio">📅 Schedule Service</a>
+    <a href="tel:+19145065752" class="mobile-phone">📞 (914) 506-5752</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -632,55 +755,36 @@
     <!-- Column 1 -->
     <div class="testi-col testi-col-1">
       <div class="testi-col-track">
-        <!-- Original set -->
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Called VP's at 11pm for a burst pipe. A tech was at my door in 45 minutes, fixed it cleanly, and the price was completely fair. These are the real deal."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mike R." />
-            <div><div class="testi-name">Mike R.</div><div class="testi-role">Mount Kisco, NY</div></div>
-          </div>
+          <p class="testi-text">"We have used VP Plumbing several times before. We are extremely impressed with their work and their very quick responsiveness. We lost heat on a Sunday and called. They were here within the hour, found the problem and were back the next day with the part needed and solved the problem."</p>
+          <div class="testi-person"><div><div class="testi-name">Tom Smoot</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Boiler died mid-January. VP's came same day, gave me an upfront flat price, and had heat back on that evening. No hidden fees, no drama."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra L." />
-            <div><div class="testi-name">Sandra L.</div><div class="testi-role">Scarsdale, NY</div></div>
-          </div>
+          <p class="testi-text">"VP is the most reliable company I've ever worked with. Whether it's been service for my AC or plumbing issues, they respond quickly, clearly communicate their timeline and make stressful times more manageable. They will always get my business."</p>
+          <div class="testi-person"><div><div class="testi-name">Rob Sturges</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Water heater went out on a Sunday. VP's was the only company that actually answered and showed up. Installed a new one by 3pm. Outstanding."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/55.jpg" alt="Robert D." />
-            <div><div class="testi-name">Robert D.</div><div class="testi-role">Yonkers, NY</div></div>
-          </div>
+          <p class="testi-text">"Called us back right away! The guys came on time, explained the work that was to be done in detail. Very considerate to our home, clean work, and were very efficient. They even took our old very large and unused solar hot water tank to the curb. We highly recommend VP Plumbing."</p>
+          <div class="testi-person"><div><div class="testi-name">Steven Craddock</div><div class="testi-role">Google Review</div></div></div>
         </div>
-        <!-- Duplicate set (for seamless loop) -->
+        <!-- Duplicate for seamless loop -->
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Called VP's at 11pm for a burst pipe. A tech was at my door in 45 minutes, fixed it cleanly, and the price was completely fair. These are the real deal."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mike R." />
-            <div><div class="testi-name">Mike R.</div><div class="testi-role">Mount Kisco, NY</div></div>
-          </div>
+          <p class="testi-text">"We have used VP Plumbing several times before. We are extremely impressed with their work and their very quick responsiveness. We lost heat on a Sunday and called. They were here within the hour, found the problem and were back the next day with the part needed and solved the problem."</p>
+          <div class="testi-person"><div><div class="testi-name">Tom Smoot</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Boiler died mid-January. VP's came same day, gave me an upfront flat price, and had heat back on that evening. No hidden fees, no drama."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sandra L." />
-            <div><div class="testi-name">Sandra L.</div><div class="testi-role">Scarsdale, NY</div></div>
-          </div>
+          <p class="testi-text">"VP is the most reliable company I've ever worked with. Whether it's been service for my AC or plumbing issues, they respond quickly, clearly communicate their timeline and make stressful times more manageable. They will always get my business."</p>
+          <div class="testi-person"><div><div class="testi-name">Rob Sturges</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Water heater went out on a Sunday. VP's was the only company that actually answered and showed up. Installed a new one by 3pm. Outstanding."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/55.jpg" alt="Robert D." />
-            <div><div class="testi-name">Robert D.</div><div class="testi-role">Yonkers, NY</div></div>
-          </div>
+          <p class="testi-text">"Called us back right away! The guys came on time, explained the work that was to be done in detail. Very considerate to our home, clean work, and were very efficient. They even took our old very large and unused solar hot water tank to the curb. We highly recommend VP Plumbing."</p>
+          <div class="testi-person"><div><div class="testi-name">Steven Craddock</div><div class="testi-role">Google Review</div></div></div>
         </div>
       </div>
     </div>
@@ -690,52 +794,34 @@
       <div class="testi-col-track">
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"AC went out in July. VP's squeezed us in the same afternoon, diagnosed the issue fast, and had us cool by dinnertime. The tech was courteous and explained every step."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/61.jpg" alt="James T." />
-            <div><div class="testi-name">James T.</div><div class="testi-role">Peekskill, NY</div></div>
-          </div>
+          <p class="testi-text">"Jimmy from VP's Plumbing was great! Very professional, prompt and did a great job! Highly recommend."</p>
+          <div class="testi-person"><div><div class="testi-name">Edmundo R.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Had a stubborn drain clog that two other companies couldn't fix. VP's used a camera and hydro-jet and had it cleared in an hour. Worth every penny."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/29.jpg" alt="Maria G." />
-            <div><div class="testi-name">Maria G.</div><div class="testi-role">White Plains, NY</div></div>
-          </div>
+          <p class="testi-text">"Very professional. I got a call when he was on the way. He sent an email with his name and photo, which is great in these days. He was very knowledgeable."</p>
+          <div class="testi-person"><div><div class="testi-name">Lula E.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"They found a slab leak I didn't even know I had. Non-invasive detection, no ripping up my floors unnecessarily. Saved me thousands. Extremely professional."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jennifer K." />
-            <div><div class="testi-name">Jennifer K.</div><div class="testi-role">Rye, NY</div></div>
-          </div>
+          <p class="testi-text">"Vinny's crew is great. Friendly, great communication. Very capable."</p>
+          <div class="testi-person"><div><div class="testi-name">Jeffrey Lange</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <!-- Duplicate -->
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"AC went out in July. VP's squeezed us in the same afternoon, diagnosed the issue fast, and had us cool by dinnertime. The tech was courteous and explained every step."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/61.jpg" alt="James T." />
-            <div><div class="testi-name">James T.</div><div class="testi-role">Peekskill, NY</div></div>
-          </div>
+          <p class="testi-text">"Jimmy from VP's Plumbing was great! Very professional, prompt and did a great job! Highly recommend."</p>
+          <div class="testi-person"><div><div class="testi-name">Edmundo R.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Had a stubborn drain clog that two other companies couldn't fix. VP's used a camera and hydro-jet and had it cleared in an hour. Worth every penny."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/29.jpg" alt="Maria G." />
-            <div><div class="testi-name">Maria G.</div><div class="testi-role">White Plains, NY</div></div>
-          </div>
+          <p class="testi-text">"Very professional. I got a call when he was on the way. He sent an email with his name and photo, which is great in these days. He was very knowledgeable."</p>
+          <div class="testi-person"><div><div class="testi-name">Lula E.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"They found a slab leak I didn't even know I had. Non-invasive detection, no ripping up my floors unnecessarily. Saved me thousands. Extremely professional."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Jennifer K." />
-            <div><div class="testi-name">Jennifer K.</div><div class="testi-role">Rye, NY</div></div>
-          </div>
+          <p class="testi-text">"Vinny's crew is great. Friendly, great communication. Very capable."</p>
+          <div class="testi-person"><div><div class="testi-name">Jeffrey Lange</div><div class="testi-role">Google Review</div></div></div>
         </div>
       </div>
     </div>
@@ -745,52 +831,34 @@
       <div class="testi-col-track">
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"El equipo de VP's habla español y eso hizo todo mucho más fácil. Vinieron el mismo día y arreglaron la fuga rápidamente. Muy recomendados."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/77.jpg" alt="Carlos M." />
-            <div><div class="testi-name">Carlos M.</div><div class="testi-role">Patterson, NY</div></div>
-          </div>
+          <p class="testi-text">"Very nice technician, explained everything he was checking and answered all questions."</p>
+          <div class="testi-person"><div><div class="testi-name">Onil C.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Used VP's for a full bathroom re-pipe. They showed up on time, kept everything clean, and finished ahead of schedule. Quoted price matched exactly. Will use again."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/82.jpg" alt="Lisa W." />
-            <div><div class="testi-name">Lisa W.</div><div class="testi-role">Ossining, NY</div></div>
-          </div>
+          <p class="testi-text">"They did a great job at replacing my hot water heater."</p>
+          <div class="testi-person"><div><div class="testi-name">Juan M.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"VP's installed a new tankless water heater for us. The tech walked me through the whole system, gave maintenance tips, and left zero mess. Couldn't be happier."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/91.jpg" alt="David P." />
-            <div><div class="testi-name">David P.</div><div class="testi-role">New Rochelle, NY</div></div>
-          </div>
+          <p class="testi-text">"Professional and honest."</p>
+          <div class="testi-person"><div><div class="testi-name">Kathleen Bereck</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <!-- Duplicate -->
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"El equipo de VP's habla español y eso hizo todo mucho más fácil. Vinieron el mismo día y arreglaron la fuga rápidamente. Muy recomendados."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/77.jpg" alt="Carlos M." />
-            <div><div class="testi-name">Carlos M.</div><div class="testi-role">Patterson, NY</div></div>
-          </div>
+          <p class="testi-text">"Very nice technician, explained everything he was checking and answered all questions."</p>
+          <div class="testi-person"><div><div class="testi-name">Onil C.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"Used VP's for a full bathroom re-pipe. They showed up on time, kept everything clean, and finished ahead of schedule. Quoted price matched exactly. Will use again."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/82.jpg" alt="Lisa W." />
-            <div><div class="testi-name">Lisa W.</div><div class="testi-role">Ossining, NY</div></div>
-          </div>
+          <p class="testi-text">"They did a great job at replacing my hot water heater."</p>
+          <div class="testi-person"><div><div class="testi-name">Juan M.</div><div class="testi-role">Google Review</div></div></div>
         </div>
         <div class="testi-card">
           <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">"VP's installed a new tankless water heater for us. The tech walked me through the whole system, gave maintenance tips, and left zero mess. Couldn't be happier."</p>
-          <div class="testi-person">
-            <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/91.jpg" alt="David P." />
-            <div><div class="testi-name">David P.</div><div class="testi-role">New Rochelle, NY</div></div>
-          </div>
+          <p class="testi-text">"Professional and honest."</p>
+          <div class="testi-person"><div><div class="testi-name">Kathleen Bereck</div><div class="testi-role">Google Review</div></div></div>
         </div>
       </div>
     </div>
@@ -991,6 +1059,20 @@
   </div>
 </div>
 
+
+<!-- ══════════════════════════════════════════════
+     MOBILE MENU
+     ══════════════════════════════════════════════ -->
+<script>
+function openMobileMenu() {
+  document.getElementById('mobile-menu').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 
 <!-- ══════════════════════════════════════════════
      WEBGL SHADER BACKGROUND
